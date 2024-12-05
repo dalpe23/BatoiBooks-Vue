@@ -13,7 +13,7 @@ const api = axios.create({
     getBooks: () => api.get(`/books`),
     getModules: () => api.get(`/modules`),
     getBook: (id) => api.get(`/books/${id}`),
-    createBook: (item) => api.post(`/books`, item),
+    addBook: (item) => api.post(`/books`, item),
     modify: (item) => api.put(`/books/${item.id}`, item),
     deleteBook: (id) => api.delete(`/books/${id}`),
 }

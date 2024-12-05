@@ -21,6 +21,7 @@ export default {
   mounted() {
     try {
       store.rellenarLibros()
+      store.rellenarModulos()
     } catch (error) {
       console.log('error' + error)
     }

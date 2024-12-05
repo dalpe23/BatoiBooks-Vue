@@ -13,6 +13,10 @@ export const store = {
   async rellenarModulos(){
     const response = await api.getModules();
     store.state.modules = response.data
+  },
+  async anadirLibro(libro){
+    const response = await api.addBook(libro)
+    store.state.books.push(response.data)
   }
 }
 
