@@ -2,6 +2,9 @@
 import { store } from '@/store';
 
 export default {
+    components: {
+        store
+    },
     computed: {
         modules() {
             return store.state.modules
@@ -14,8 +17,9 @@ export default {
         anadir() {
             try {
                 store.anadirLibro(this.book)
+                store.anadirMensaje('libro añadido con éxito')
             } catch (error) {
-                console.log('error' + error)
+                store.anadirMensaje(error)
             }
         }
     },
@@ -38,9 +42,9 @@ export default {
 
             <div>
                 <label for="id-module">Módulo:</label>
-                <select id="id-module" required>
+                <select v-model="book.moduleCode" id="id-module" required>
                     <option value="">- Selecciona un módulo -</option>
-                    <option v-for="module in modules" :value="module.code">{{ module.cliteral }}</option>
+                    <option v-for="module in modules" :value="module.code" >{{ module.cliteral }}</option>
                 </select>
                 <span class="error"></span>
             </div>

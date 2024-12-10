@@ -8,7 +8,8 @@ export default {
         }
     },
     components: {
-        BookItem
+        BookItem,
+        store
     }
 }
 </script>
@@ -21,3 +22,6 @@ export default {
         
     ></book-item>
 </template>
+
+<style>
+</style>
