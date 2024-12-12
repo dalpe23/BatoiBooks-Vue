@@ -42,10 +42,7 @@ export default {
     <h1>BatoiBooks</h1>
     <app-menu></app-menu>
     <app-messages></app-messages>
-    <books-list></books-list>
-    <add-book></add-book>
-    <app-cart></app-cart>
-    <about-view></about-view>
+    <router-view></router-view>
     <footer>Daniel Alemany</footer>
   </div>
 

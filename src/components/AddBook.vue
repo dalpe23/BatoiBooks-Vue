@@ -2,8 +2,16 @@
 import { store } from '@/store';
 
 export default {
+    props: {
+        id: String
+    },
     components: {
         store
+    },
+    data() {
+        return {
+            book: {}
+        }
     },
     computed: {
         modules() {
@@ -15,27 +23,52 @@ export default {
     },
     methods: {
         anadir() {
-            try {
-                store.anadirLibro(this.book)
-                store.anadirMensaje('libro añadido con éxito')
-            } catch (error) {
-                store.anadirMensaje(error)
+            if (!this.id) {     //si no hay id, añade
+                try {
+                    store.anadirLibro(this.book)
+                    store.anadirMensaje('libro añadido con éxito')
+                } catch (error) {
+                    store.anadirMensaje(error)
+                }
+            } else {            //si hay id, edita
+                try {
+                    store.editarLibro(this.book)
+                    store.anadirMensaje('libro editado con éxito')
+                } catch (error) {
+                    store.anadirMensaje(error)
+                }
+            }
+        },
+        redirect() {
+            this.$router.push('/');
+        },
+        async cargarLibroConId() {
+            if (this.id) {      //si hay id, muestra los botones de editar
+                const libroMontadoAEditar = await store.verLibroConId(this.id)      //la id del prop
+                this.book = libroMontadoAEditar
             }
         }
     },
-    data() {
-        return {
-            book: {}
+    async mounted() {
+        this.cargarLibroConId()
+    },
+    watch: {       //poner un watch q mire las id y segun si hay o no que borre o no el form(poniendo el book a {})
+        id(newValue) {
+            if (!newValue) {
+                this.book = {}
+            } else {
+                this.cargarLibroConId()
+            }
         }
-
     }
 }
 </script>
 
 <template>
     <div id="form">
-        <form id="bookForm" novalidate @submit.prevent="anadir">
-            <h3 id="tituloForm">Añadir libro</h3>
+        <form id="bookForm" novalidate @submit.prevent="anadir" @submit="redirect">
+            <h3 id="tituloForm" v-if="!this.id">Añadir libro</h3>
+            <h3 id="tituloForm" v-if="this.id">Editar libro</h3>
             <div id="idLibroDiv" style="display:none;"> Id:
                 <input type="text" id="id-libro" readonly>
             </div>
@@ -44,7 +77,7 @@ export default {
                 <label for="id-module">Módulo:</label>
                 <select v-model="book.moduleCode" id="id-module" required>
                     <option value="">- Selecciona un módulo -</option>
-                    <option v-for="module in modules" :value="module.code" >{{ module.cliteral }}</option>
+                    <option v-for="module in modules" :value="module.code">{{ module.cliteral }}</option>
                 </select>
                 <span class="error"></span>
             </div>
@@ -84,8 +117,10 @@ export default {
                 <textarea v-model="book.comments" id="comments"></textarea>
             </div>
 
-            <button id="submitButton" type="submit">Añadir</button>
-            <button type="reset">Reset</button>
+            <button id="submitButton" type="submit" v-if="!this.id">Añadir</button>
+            <button id="submitButton" type="submit" v-if="this.id">Editar</button>
+            <button type="reset" v-if="!this.id">Reset</button>
+            <button type="button" @click="cargarLibroConId()" v-if="this.id">Reset</button>
 
         </form>
     </div>

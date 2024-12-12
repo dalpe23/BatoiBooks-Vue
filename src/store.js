@@ -6,6 +6,7 @@ export const store = {
     books: [],
     modules: [],
     messages: [],
+    cart: [],
   }),
   async rellenarLibros() {
     try {
@@ -57,4 +58,37 @@ export const store = {
       store.anadirMensaje(error);
     }
   },
+  async editarLibro(libro) {
+    try {
+      const response = await api.modify(libro);
+    } catch (error) {
+      store.anadirMensaje(error);
+    }
+  },
+  async anadirLibroACarrito(libro) {
+    try {
+      store.state.cart.push(libro);
+    } catch (error) {
+      store.anadirMensaje(error);
+    }
+  },
+  async eliminarLibroCarrito(idLibro) {
+    try {
+      let indice = this.state.books.findIndex((libro) => libro.id === idLibro);
+      if (indice === -1) {
+        throw "No existe ningún libro con ese ID.";
+      }
+      store.state.cart.splice(indice, 1);
+    } catch (error) {
+      store.anadirMensaje(error);
+    }
+  },
+  async verLibroConId(idLibro) {
+    try {
+      const response = await api.getBook(idLibro);
+      return response.data
+    } catch (error) {
+      store.anadirMensaje(error);
+    }
+  }
 };

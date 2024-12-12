@@ -2128,22 +2128,10 @@
   "books": [
     {
       "userId": 4,
-      "moduleCode": "5021",
-      "publisher": "McGraw-Hill",
-      "price": 15,
-      "pages": 173,
-      "status": "bad",
-      "photo": "",
-      "comments": "Fet pols",
-      "soldDate": "",
-      "id": "7"
-    },
-    {
-      "userId": 4,
       "moduleCode": "5025",
       "publisher": "Apunts",
       "price": 35,
-      "pages": 73,
+      "pages": 7355,
       "status": "good",
       "photo": "",
       "comments": "",
@@ -2153,7 +2141,7 @@
     {
       "id": "220e",
       "moduleCode": "0026",
-      "publisher": "ghola",
+      "publisher": "ghffffola",
       "price": 23,
       "pages": 23,
       "status": "good",
@@ -2184,16 +2172,7 @@
       "price": 2323,
       "pages": 4444,
       "status": "good",
-      "comments": "dd"
-    },
-    {
-      "id": "c52a",
-      "moduleCode": "0048",
-      "publisher": "rgrggdrg",
-      "price": 2323,
-      "pages": 4444,
-      "status": "good",
-      "comments": "dd"
+      "comments": "jolo"
     }
   ]
 }

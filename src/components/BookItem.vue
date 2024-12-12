@@ -12,19 +12,6 @@ export default {
             Required: true,
         }
     },
-    methods: {
-        eliminar(idLibro) {
-            try {
-                if (confirm("quieres borrar el libro " + idLibro + "?")) {
-                    store.eliminarLibro(idLibro)
-                    store.anadirMensaje('libro con id ' + idLibro +' eliminado')
-                }
-            } catch (error) {
-                store.anadirMensaje(error)
-            }
-        }
-    }
-
 }
 </script>
 
@@ -38,17 +25,7 @@ export default {
         <p>{{ book.soldDate }}</p>
         <p>{{ book.comments }}</p>
         <p><strong>{{ book.price }}€</strong></p>
-        <button class="addCart">
-            <span class="material-icons">add_shopping_cart</span>
-        </button>
-
-        <button class="edit">
-            <span class="material-icons">edit</span>
-        </button>
-
-        <button @click="eliminar(book.id)" class="remove">
-            <span class="material-icons">delete</span>
-        </button>
+        <slot></slot>
     </div>
 </template>
 

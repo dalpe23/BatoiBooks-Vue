@@ -8,9 +8,10 @@ export default {
 <template>
     <nav>
         <ul>
-            <li><a href="#list">Ver Libros</a></li>
-            <li><a id="addBookButton" href="#form">Añadir Libro</a></li>
-            <li><a href="#about">Acerca de...</a></li>
+            <router-link to="/">Ver Libros</router-link>
+            <router-link to="/addBook">Añadir Libro</router-link>
+            <router-link to="/carrito">Ver Carrito</router-link>
+            <router-link to="/about">Acerca de...</router-link>
         </ul>
     </nav>
 </template>
