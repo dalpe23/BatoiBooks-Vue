@@ -1,50 +1,50 @@
 <script>
 import BookItem from './BookItem.vue';
-import { store } from '@/store';
+import { useDataStore } from '../stores/datos.js';
+import { mapState, mapActions } from 'pinia';
 export default {
     computed: {
-        books() {
-            return store.state.books
-        }
+        ...mapState(useDataStore, ['books', 'messages', 'cart']),
     },
     components: {
         BookItem,
-        store
+        useDataStore
     },
     methods: {
+        ...mapActions(useDataStore, ['eliminarLibro', 'anadirLibroACarrito', 'anadirMensaje', 'totalLibros']),
         eliminar(idLibro) {
             try {
                 if (confirm("quieres borrar el libro " + idLibro + "?")) {
-                    store.eliminarLibro(idLibro)
-                    store.anadirMensaje('libro con id ' + idLibro + ' eliminado')
+                    this.eliminarLibro(idLibro)
+                    this.anadirMensaje('libro con id ' + idLibro + ' eliminado')
                 }
             } catch (error) {
-                store.anadirMensaje(error)
+                this.anadirMensaje(error)
             }
         },
         editar(book) {
             try {
-                store.anadirMensaje('editando libro...')
+                this.anadirMensaje('editando libro...')
                 this.$router.push({ name: "editBook", params: { id: book.id } });
             } catch (error) {
-                store.anadirMensaje(error)
+                this.anadirMensaje(error)
             }
         },
         anadirCarrito(book) {
             try {
-                store.anadirLibroACarrito(book)
-                store.anadirMensaje('libro añadido al carrito con éxito')
+                this.anadirLibroACarrito(book)
+                this.anadirMensaje('libro añadido al carrito con éxito')
             } catch (error) {
-                store.anadirMensaje(error)
+                this.anadirMensaje(error)
             }
-        }
-
+        },
     }
 }
 </script>
 
 <template>
-    <div id="list"></div>
+    <h1>Total de Libros: {{ this.totalLibros() }}</h1>
+    <div id="list">
     <book-item v-for="book in books" :key="book.id" :book="book">
         <button class="addCart">
             <span @click="anadirCarrito(book)" class="material-icons">add_shopping_cart</span>
@@ -58,6 +58,13 @@ export default {
             <span class="material-icons">delete</span>
         </button>
     </book-item>
+    </div>
 </template>
 
-<style></style>
+<style>
+#list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3%; 
+}
+</style>

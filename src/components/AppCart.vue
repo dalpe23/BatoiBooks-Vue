@@ -1,23 +1,39 @@
 <script>
-import { store } from '@/store';
+import { useDataStore } from '../stores/datos.js';
+import { mapState, mapActions } from 'pinia';
 import BookItem from './BookItem.vue';
 export default {
     computed: {
-        cart() {
-            return store.state.cart
-        }
+        ...mapState(useDataStore, ['cart', 'books', 'messages']),
     },
     components: {
         BookItem,
-        store
+        useDataStore
     },
     methods: {
+        ...mapActions(useDataStore, ['eliminarLibroCarrito', 'anadirMensaje', 'borrarCarrito']),
         eliminarCarrito(idLibro) {
             try {
-                store.eliminarLibroCarrito(idLibro)
-                store.anadirMensaje('libro eliminado del carrito con éxito')
+                this.eliminarLibroCarrito(idLibro)
+                this.anadirMensaje('libro eliminado del carrito con éxito')
             } catch (error) {
-                store.anadirMensaje(error)
+                this.anadirMensaje(error)
+            }
+        },
+        borrarCarritoCompleto(){
+            try{
+                this.borrarCarrito()
+                this.anadirMensaje('libro eliminado del carrito con éxito')
+            }catch(error){
+                this.anadirMensaje(error)
+            }
+        },
+        realizarCompra(){
+            try {
+                this.borrarCarrito()
+                alert('Felicidades por tu compra!!!')
+            } catch (error) {
+                this.anadirMensaje(error)
             }
         }
     }
@@ -26,13 +42,24 @@ export default {
 
 <template>
     <h1>Carrito de Libros</h1>
-    <div id="list"></div>
-    <book-item v-for="book in cart"
+    <div id="list">
+    <book-item v-for="(book, index) in cart"
         :key="book.id"
         :book="book">
         
-        <button @click="eliminarCarrito(book.id)" class="cart-off">
+        <button @click="eliminarCarrito(index)" class="cart-off">
             <span class="material-icons">delete</span>
         </button>
     </book-item>
+ </div>
+    <button>
+        <span @click="borrarCarritoCompleto()" class="">Borrar libros del Carrito</span>
+    </button>
+    <button>
+        <span @click="realizarCompra()" class="">Realizar Compra</span>
+    </button>
 </template>
+
+<style>
+
+</style>

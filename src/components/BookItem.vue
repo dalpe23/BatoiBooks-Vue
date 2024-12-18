@@ -1,24 +1,23 @@
 <script>
-const SERVER = import.meta.env.VITE_URL_API
-import { store } from '@/store';
-
+import { useDataStore } from '../stores/datos.js';
+import { mapState, mapActions } from 'pinia';
 export default {
-    components: {
-        store
-    },
     props: {
         book: {
             type: Object,
             Required: true,
         }
     },
+    computed: {
+        ...mapState(useDataStore, ['books', 'modules', 'getModuleByCode'])
+    },
 }
 </script>
 
 <template>
-    <div>
+    <div class="card">
         <h2>Libro: {{ book.id }}</h2>
-        <p>Cod. Módulo: {{ book.moduleCode }}</p>
+        <p>{{ getModuleByCode(book.moduleCode).cliteral || {} }}</p>
         <p>Editorial: {{ book.publisher }}</p>
         <p>{{ book.pages }} páginas</p>
         <p>Estado: {{ book.status }}</p>
@@ -31,4 +30,13 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+.card {
+  background-color: #5f9ea0; 
+  padding: 1.5px;
+  border-radius: 9px;
+  color: #fff;
+  text-align: center;
+  width: 200px;
+  height: 250px;
+}
 </style>

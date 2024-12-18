@@ -110,53 +110,6 @@ input:invalid, select:invalid {
   background-color: green;
 }
 
-/* libros */
-#list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5%; 
-  padding: 2%;
-}
-
-.card {
-  background-color: #5f9ea0; 
-  padding: 1.5px;
-  border-radius: 8px;
-  color: #fff;
-  text-align: center;
-}
-
-nav {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100%; 
-  background-color: #00a2ff;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 20px;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 70px;
-  margin: 0;
-  padding: 0;
-}
-
-nav a {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.5s;
-}
-
-nav a:hover {
-  color: #ffffff;
-}
-
 #form {
   margin-top: 5%; 
   padding: 20px;

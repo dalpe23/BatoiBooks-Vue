@@ -6,7 +6,8 @@ import AppMessages from './components/AppMessages.vue';
 import BooksList from './components/BooksList.vue';
 import AppCart from './components/AppCart.vue';
 import AboutView from './views/AboutView.vue';
-import {store} from './store.js';
+import { useDataStore } from './stores/datos.js';  
+import { mapState, mapActions } from 'pinia';
 
 
 export default {
@@ -18,10 +19,16 @@ export default {
     AppCart,
     AboutView
   },
+  computed: {
+        ...mapState(useDataStore, ['books', 'modules']),
+    },
+  methods: {
+        ...mapActions(useDataStore, ['rellenarLibros', 'rellenarModulos']),
+  },
   mounted() {
     try {
-      store.rellenarLibros()
-      store.rellenarModulos()
+      this.rellenarLibros()
+      this.rellenarModulos()
     } catch (error) {
       console.log('error' + error)
     }
@@ -50,5 +57,4 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
 </style>

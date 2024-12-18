@@ -1,12 +1,13 @@
 <script>
-import { store } from '@/store';
+import { useDataStore } from '../stores/datos.js';
+import { mapState, mapActions } from 'pinia';
 
 export default {
     props: {
         id: String
     },
     components: {
-        store
+        useDataStore
     },
     data() {
         return {
@@ -14,28 +15,24 @@ export default {
         }
     },
     computed: {
-        modules() {
-            return store.state.modules
-        },
-        BooksList() {
-            return store.state.books
-        }
+        ...mapState(useDataStore, ['books', 'modules', 'messages']),
     },
     methods: {
+        ...mapActions(useDataStore, ['anadirLibro', 'editarLibro', 'verLibroConId', 'anadirMensaje']),
         anadir() {
             if (!this.id) {     //si no hay id, añade
                 try {
-                    store.anadirLibro(this.book)
-                    store.anadirMensaje('libro añadido con éxito')
+                    this.anadirLibro(this.book)
+                    this.anadirMensaje('libro añadido con éxito')
                 } catch (error) {
-                    store.anadirMensaje(error)
+                    this.anadirMensaje(error)
                 }
             } else {            //si hay id, edita
                 try {
-                    store.editarLibro(this.book)
-                    store.anadirMensaje('libro editado con éxito')
+                    this.editarLibro(this.book)
+                    this.anadirMensaje('libro editado con éxito')
                 } catch (error) {
-                    store.anadirMensaje(error)
+                    this.anadirMensaje(error)
                 }
             }
         },
@@ -44,7 +41,7 @@ export default {
         },
         async cargarLibroConId() {
             if (this.id) {      //si hay id, muestra los botones de editar
-                const libroMontadoAEditar = await store.verLibroConId(this.id)      //la id del prop
+                const libroMontadoAEditar = await this.verLibroConId(this.id)      //la id del prop
                 this.book = libroMontadoAEditar
             }
         }
