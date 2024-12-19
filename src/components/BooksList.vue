@@ -11,7 +11,7 @@ export default {
         useDataStore
     },
     methods: {
-        ...mapActions(useDataStore, ['eliminarLibro', 'anadirLibroACarrito', 'anadirMensaje', 'totalLibros']),
+        ...mapActions(useDataStore, ['eliminarLibro', 'anadirLibroACarrito', 'anadirMensaje', 'totalLibros', 'existeLibroEnCarrito']),
         eliminar(idLibro) {
             try {
                 if (confirm("quieres borrar el libro " + idLibro + "?")) {
@@ -46,7 +46,7 @@ export default {
     <h1>Total de Libros: {{ this.totalLibros() }}</h1>
     <div id="list">
     <book-item v-for="book in books" :key="book.id" :book="book">
-        <button class="addCart">
+        <button v-if="!this.existeLibroEnCarrito(book.id)" class="addCart">
             <span @click="anadirCarrito(book)" class="material-icons">add_shopping_cart</span>
         </button>
 

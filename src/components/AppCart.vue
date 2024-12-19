@@ -11,7 +11,7 @@ export default {
         useDataStore
     },
     methods: {
-        ...mapActions(useDataStore, ['eliminarLibroCarrito', 'anadirMensaje', 'borrarCarrito']),
+        ...mapActions(useDataStore, ['eliminarLibroCarrito', 'anadirMensaje', 'borrarCarrito', 'totalLibrosCarrito']),
         eliminarCarrito(idLibro) {
             try {
                 this.eliminarLibroCarrito(idLibro)
@@ -42,6 +42,7 @@ export default {
 
 <template>
     <h1>Carrito de Libros</h1>
+    <h1>Libros en el Carrito: {{ this.totalLibrosCarrito() }}</h1>
     <div id="list">
     <book-item v-for="(book, index) in cart"
         :key="book.id"

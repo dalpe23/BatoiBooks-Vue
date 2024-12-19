@@ -107,5 +107,11 @@ export const useDataStore = defineStore("datos", {
     totalLibros() {
       return this.books.length;
     },
+    totalLibrosCarrito() { 
+      return this.cart.length; 
+    },
+    existeLibroEnCarrito(idLibro) {
+      return this.cart.some((libro) => libro.id === idLibro);
+    }
   }
 });
